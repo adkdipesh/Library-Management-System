@@ -1,0 +1,68 @@
+{% extends "librarian/base.html" %}
+{% load static %}
+{% block title %} Transactions {% endblock %}
+
+{% block navactive %}
+<li><a href="{% url 'home-page' %}" ><i class="fa-solid fa-house"></i> Home</a></li>
+<li><a href="{% url 'at-page' %}"><i class="fa-solid fa-book"></i> Add Book</a></li>
+<li><a href="{% url 'as-page' %}"><i class="fa-solid fa-user-plus"></i> Add Student</a></li>
+<li><a href="{% url 'vt-page' %}"><i class="fa-solid fa-bars-progress"></i> Manage Book</a></li>
+<li><a href="{% url 'vs-page' %}"><i class="fa-solid fa-user-pen"></i> Manage Student</a></li>
+<li class="active"><a href="{% url 'vib-page' %}"><i class="fa-solid fa-arrow-right-arrow-left"></i> Manual Transaction</a></li>
+<li><a href="{% url 'fs-page' %}"><i class="fa-solid fa-indian-rupee-sign"></i> Fine Section</a></li>
+{% endblock %}
+
+
+{% block content %}
+<a href="{% url 'vib-page' %}" class="btn btn-outline-primary mt-4 active">View Issued Books</a>
+<a href="{% url 'iab-page' %}" class="btn btn-outline-primary mt-4">Issue Book</a>
+
+<!-- Breadcrumbs-->
+<ol class="breadcrumb ">
+    <li class="breadcrumb-item"><a href="#">Transactions</a></li>
+    <li class="breadcrumb-item active">All Issued Books</li>
+</ol>
+
+
+<div class="container">
+    <h1 class="text-center"><u>All Issued/Returned Books Record</u></h1>
+    <table class="table table-hover" id="example">
+    <thead>
+        <tr>
+            <th>Sr.No.</th>
+            <th>Student Name</th>
+            <th>ISBN</th>
+            <th>Book Title</th>
+            <th>Edition</th>
+            <th>Authors</th>
+            <th>Publication</th>
+            <th>Issued Date</th>
+            <th>Expiry Date</th>
+            <th>Return</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ib in issuedbooks %}
+        <tr>
+            <td>{{forloop.counter}}.</td>
+            <td>{{ib.student}}</td>
+            <td>{{ib.isbn}}</td>
+            <td>{{ib.isbn.edition.title.name}}</td>
+            <td>{{ib.isbn.edition.which_edition}}</td>
+            <td>
+                        {% for author in ib.isbn.edition.title.author.all %}
+                            <p>{{author.name}}</p>
+                        {% endfor %}
+            </td>
+            <td>{{ib.isbn.edition.title.publisher.name}}</td>
+            <td>{{ib.issued_date}}</td>
+            <td>{{ib.due_date}}</td>
+            <td>
+                <a href="/return_book/{{ib.id}}" class="btn btn-danger" onclick = "return confirm('Are you sure Student want to return this Book?')"> Return </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

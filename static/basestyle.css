@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f3f5f9;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.navbar {
+    width: 100%;
+    padding: 0px;
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+.container-fluid span{
+    margin-right: 50px;
+    margin-top: 10px;
+}
+img {
+    width: 150px;
+    margin-left: 40px;
+    padding: 5px;
+  }
+
+  .container-fluid ul li{
+    margin-right: 70px;
+    margin-top: 10px;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #c8d1f3;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding-top: 30px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    margin-top: 50px;
+    background: #6d7fcc;
+}
+
+#sidebar ul li.managetop{
+    color: #fff;
+    padding-left: 20px;
+    background-color: black;
+    border-bottom: 2px solid #080808;
+}
+
+#sidebar ul.components {
+    border-bottom: 5px solid #080808;
+}
+
+#sidebar ul.components>.active>a {
+        color: #fff;
+        background: #6d7fcc;
+}
+
+#sidebar ul li a {
+    border-top: 1px solid #47748b;
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff; 
+}
+ 
+ul.logoutuser {
+    padding: 10px;
+}
+
+ul.logoutuser a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.leave {
+    background: #fff;
+    color: #7386D5;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: calc(100% - 250px);
+    padding: 40px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#content.active {
+    width: 100%;
+}
+
+.another {
+    width: 100%;
+    margin: 40px 0;
+}

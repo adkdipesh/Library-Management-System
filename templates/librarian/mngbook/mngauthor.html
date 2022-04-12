@@ -1,0 +1,41 @@
+{% extends "librarian/mngbook/base_mngbook.html" %}
+
+
+{% block content %}
+<center>
+<a href="{% url 'vt-page' %}" class="btn btn-outline-primary">Manage Title</a>
+<a href="{% url 've-page' %}" class="btn btn-outline-primary">Manage Edition</a>
+<a href="{% url 'vi-page' %}" class="btn btn-outline-primary">Manage ISBN</a>
+<a href="{% url 'va-page' %}" class="btn btn-outline-primary active">Manage Authors</a>
+<a href="{% url 'vp-page' %}" class="btn btn-outline-primary">Manage Publishers</a>
+</center>
+
+<center><h1 style="margin-top: 10px;">List of Authors</h1></center>
+<table class="table">
+  <thead class="thead-dark">
+            <tr>
+                <th>Sr.No</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Nationality</th>
+                <th> Actions</th>
+            </tr>
+        </thead>
+  <tbody>
+    {% for author in authors %}
+    <tr>
+        <td>{{forloop.counter}}.</td>
+        <td>{{author.name}}</td>
+        <td>{{author.email}}</td>
+        <td>{{author.nationality}}</td>
+        <td>
+            <a href="/edit_author/{{author.id }}"><span class="btn btn-primary" >Edit </span></a>
+            <a href="/delete_author/{{author.id}}" class="btn btn-danger" onclick=" return confirm('Are you sure you want to delete this Author?')"> Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<center><a class="btn btn-primary" href="{% url 'aa-page' %}" role="button"><i class="fa-solid fa-user-plus"></i> Add Author</a></center> 
+
+{% endblock %}

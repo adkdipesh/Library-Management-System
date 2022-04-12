@@ -1,0 +1,49 @@
+{% extends "studenttemplate/base.html" %}
+
+{% block title %} Return Book {% endblock %}
+
+{% block stylesheet %} 
+<style>
+    .header {
+        margin-top: 10px;
+    }
+    .btn {
+        margin-left: 10px;
+        background-color: rgb(245, 246, 247);
+    }
+    .borrowbtn {
+        color: black; 
+        border: 2px solid #008CBA;
+      } 
+      .borrowbtn:hover {
+        background-color: #008CBA;
+        color: white;
+      }
+</style>
+{% endblock %}
+
+{% block navbar %}
+<center>
+<div class="header">
+    <a href="{% url 'shome-page' %}" class="btn btn-outline-primary btn-lg">Home</a>
+    <a href="{% url 'bb-page' %}" class="btn btn-outline-primary btn-lg">Borrow Book</a>
+    <a href="{% url 'rb-page' %}" class="btn btn-outline-primary btn-lg active">Return Book</a>
+    <a href="{% url 'slogout-page' %}" class="btn btn-outline-primary btn-lg">Logout</a>
+</div>
+ </center>
+{% endblock %}
+
+
+{% block content1 %}
+    <a href="{% url 'rb-page' %}?camera=1" type="button" class="btn borrowbtn"><h2>Click here to scan QR code of book to be Returned</h2></a></br>
+    <h3>{{barcode}}</h3>
+{% endblock %}
+
+
+{% block content2 %}
+    <h2 style="background-color: black; color:white;">Alert Message Below</h2>
+    {{barcode}}
+    <h5>..........................................</h5>
+     <center><h5>{{msg}}</h5></center>
+    <h5>..........................................</h5>
+{% endblock %}

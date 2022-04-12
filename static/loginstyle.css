@@ -1,0 +1,95 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+.top{
+    width: 100%;
+    height: 15%;
+    background-color: rgb(13, 6, 71);
+    padding: 24px;
+    margin: auto;
+}
+.top img{
+    filter: invert(10%);
+    margin-left: 70px;
+}
+
+.navbar{
+    display:inline-block;
+    position: absolute;
+    left: 35%;
+    top: 15px;
+    padding: 10px;
+    cursor: pointer;
+    display: inline-block;
+}
+.navbar li{
+    display: inline-block;
+    font-size: 25px;
+}
+.navbar li a{
+    text-decoration: none;
+    color: white;
+    padding: 30px 15px;
+}
+.navbar li a:hover, .navbar li a.active{
+    text-decoration: underline;
+    color: grey;
+}
+
+body{
+
+    background-image: url("sec.jpg");
+    background-position: 0px 150px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.login{
+    max-width: 40%;
+    margin: auto;
+    margin-right: 0px;
+    margin-top: -35px;
+    text-align: center;
+    padding: 5px;
+}
+
+.login h2{
+    width: 0ch;
+    overflow: hidden;
+    white-space:nowrap;
+    color:rgb(16, 248, 93);
+    animation:text 5s infinite;
+}
+@keyframes text{
+  0%{width: 0ch;}
+  50%{width: 22ch;}
+}
+
+.login input,button{
+    width: 85%;
+    margin: 12px auto;
+    display: block;
+    border-radius: 11px;
+}
+.login input{
+    font-size: 17px;
+    padding: 14px;
+    border: 2px solid rgb(147 140 140);
+}
+
+.btn{
+    color: white;
+    padding: 5px;
+    background: #378efa;
+    font-size: 24px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+
+.btm{
+    margin: 113px 0 0 0;
+}

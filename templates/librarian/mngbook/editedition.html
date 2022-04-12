@@ -1,0 +1,15 @@
+{% extends "librarian/mngbook/base_mngbook.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="container jumbotron">
+    <h2>Edit edition info of a Book</h2>
+    <form method="POST" action="" >
+        {% csrf_token %}
+        {{form.as_p}}
+        <input class="btn btn-dark" type="submit" value="Update">
+        <a href="{% url 've-page' %}" class="btn btn-outline-danger">Back</a>
+    </form>
+
+{% endblock %}

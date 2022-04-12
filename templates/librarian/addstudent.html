@@ -1,0 +1,35 @@
+{% extends "librarian/base.html" %}
+
+{% block title %} Book {% endblock %}
+
+{% block navactive %}
+<li><a href="{% url 'home-page' %}" ><i class="fa-solid fa-house"></i> Home</a></li>
+<li><a href="{% url 'at-page' %}"><i class="fa-solid fa-book"></i> Add Book</a></li>
+<li  class="active"><a href="{% url 'as-page' %}"><i class="fa-solid fa-user-plus"></i> Add Student</a></li>
+<li><a href="{% url 'vt-page' %}"><i class="fa-solid fa-bars-progress"></i> Manage Book</a></li>
+<li><a href="{% url 'vs-page' %}"><i class="fa-solid fa-user-pen"></i> Manage Student</a></li>
+<li><a href="{% url 'vib-page' %}"><i class="fa-solid fa-arrow-right-arrow-left"></i> Manual Transaction</a></li>
+<li><a href="{% url 'fs-page' %}"><i class="fa-solid fa-indian-rupee-sign"></i> Fine Section</a></li>
+{% endblock %}
+
+
+{% block content %}
+
+<center><h2>Add Student</h2></center>
+{% if submitted %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    A <strong>Student</strong> was successfully registered. <a href="{% url 'vs-page' %}" class=""> View All Students </a>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  </div>
+ {% endif %}
+ 
+<div class="container jumbotron">
+    <form method="POST" action="" >
+        {% csrf_token %}
+        {{form.as_p}}
+        <input class="btn btn-dark" type="submit" value="Add Student">
+        <a href="{% url 'as-page' %}" class="btn btn-outline-primary">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}

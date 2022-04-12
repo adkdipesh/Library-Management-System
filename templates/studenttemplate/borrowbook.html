@@ -1,0 +1,82 @@
+{% extends "studenttemplate/base.html" %}
+
+{% block title %} Borrow Book {% endblock %}
+
+{% block stylesheet %} 
+<style>
+    .header {
+        margin-top: 10px;
+    }
+    .btn {
+        margin-left: 10px;
+        background-color: rgb(245, 246, 247);
+    }
+    .borrowbtn {
+        color: black; 
+        border: 2px solid #008CBA;
+      } 
+      .borrowbtn:hover {
+        background-color: #008CBA;
+        color: white;
+      }
+</style>
+{% endblock %}
+
+{% block navbar %}
+<center>
+<div class="header">
+    <a href="{% url 'shome-page' %}" class="btn btn-outline-primary btn-lg">Home</a>
+    <a href="{% url 'bb-page' %}" class="btn btn-outline-primary btn-lg active">Borrow Book</a>
+    <a href="{% url 'rb-page' %}" class="btn btn-outline-primary btn-lg">Return Book</a>
+    <a href="{% url 'slogout-page' %}" class="btn btn-outline-primary btn-lg">Logout</a>
+</div>
+ </center>
+{% endblock %}
+
+
+{% block content1 %}
+    <a href="{% url 'bb-page' %}?camera=1" type="button" class="btn borrowbtn"><h2>Click here to scan QR code of book to be Borrowed</h2></a> </br>
+    <h3>{{obj.isbn.barcode}}</h3>
+{% endblock %}
+
+
+{% block content2 %}
+<h2 style="background-color: black; color:white;">Recent Issue Details</h2>
+<h2 style="color:red">{{msg}}</h2>
+<div class="container mt-4">
+    <table class="table table-hover" >
+        <thead>
+                <tr>
+                    <th>Borrowed By:</th>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Edition</th>
+                    <th>Authors</th>
+                    <th>Publication</th>
+                    <th>Issued Date</th>
+                    <th>Expiry Date</th>
+                </tr>
+            </thead>
+      <tbody>
+        <tr>
+            <td>
+                {{obj.studentname}} </br>
+                {{obj.student.year_joined}}{{obj.student.branch}}{{obj.student.roll_no}}
+            </td>
+            <td>{{obj.isbn.barcode}}</td>
+            <td>{{obj.isbn.edition.title.name}}</td>
+            <td>{{obj.isbn.edition.which_edition}}</td>
+            <td>
+                        {% for author in obj.isbn.edition.title.author.all %}
+                            <p>{{author.name}}</p>
+                        {% endfor %}
+            </td>
+            <td>{{obj.isbn.edition.title.publisher.name}}</td>
+            <td>{{obj.issued_date}}</td>
+            <td>{{obj.due_date}}</td>
+        </tr>
+      </tbody>
+    </table>
+{% endblock %}
+
+

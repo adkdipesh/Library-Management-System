@@ -1,0 +1,79 @@
+{% extends "studenttemplate/base.html" %}
+
+{% block title %} Student Home {% endblock %}
+
+{% block stylesheet %} 
+<style>
+    .header {
+        margin-top: 10px;
+    }
+    .btn {
+        margin-left: 10px;
+        background-color: rgb(245, 246, 247);
+    }
+    .extra{
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block navbar %}
+<center>
+<div class="header">
+    <a href="{% url 'shome-page' %}" class="btn btn-outline-primary active btn-lg">Home</a>
+    <a href="{% url 'bb-page' %}" class="btn btn-outline-primary btn-lg">Borrow Book</a>
+    <a href="{% url 'rb-page' %}" class="btn btn-outline-primary btn-lg">Return Book</a>
+    <a href="{% url 'slogout-page' %}" class="btn btn-outline-primary btn-lg">Logout</a>
+</div>
+ </center>
+{% endblock %}
+
+{% block content1 %}
+    <div style="text-align: left; padding-left:20px; color:rgb(25, 10, 48);">
+        <h3>Name : {{student.name}} </h3>
+        <h3>Roll No. : SEC{{student.year_joined}}{{student.branch}}{{student.roll_no}} </h3> 
+        <h3>Email Address : {{student.email}} </h3>
+        <h3>Issued Book Count : {{student.issued_count}} </h3>
+        <h3>Fine Status : {{student.fine_status}} </h3>
+    </div>
+{% endblock %}
+
+{% block content2 %}
+<div class="container mt-4">
+    <h1 class="text-center"><u>Borrowed Books</u></h1>
+    <table class="table table-hover" >
+        <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    <th>Title</th>
+                    <th>Edition</th>
+                    <th>Authors</th>
+                    <th>Publication</th>
+                    <th>Issued Date</th>
+                    <th>Expiry Date</th>
+                    <th>Returned Status</th>
+                    <th>Fine (Rs.)</th>
+                </tr>
+            </thead>
+      <tbody>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{forloop.counter}}.</td>
+            <td>{{transaction.isbn.edition.title.name}}</td>
+            <td>{{transaction.isbn.edition.which_edition}}</td>
+            <td>
+                        {% for author in transaction.isbn.edition.title.author.all %}
+                            <p>{{author.name}}</p>
+                        {% endfor %}
+            </td>
+            <td>{{transaction.isbn.edition.title.publisher.name}}</td>
+            <td>{{transaction.issued_date}}</td>
+            <td>{{transaction.due_date}}</td>
+            <td>{{transaction.returned_status}}</td>
+            <td>{{transaction.fine}}</td>
+            <td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

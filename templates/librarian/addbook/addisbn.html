@@ -1,0 +1,45 @@
+{% extends "librarian/addbook/base_addbook.html" %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active"><a class="nav-link" href="{% url 'at-page' %}">Add Title<span class="sr-only">(current)</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'aa-page' %}">Add Author</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'ap-page' %}">Add Publication</a></li>
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">View</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'va-page' %}">Authors</a>
+                    <a class="dropdown-item" href="{% url 'vp-page' %}">Publications</a>
+                    <a class="dropdown-item" href="{% url 'vt-page' %}">Book Titles</a>
+                    <a class="dropdown-item" href="{% url 'vi-page' %}">Book ISBNs</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<a href="{% url 'at-page' %}" class="btn btn-outline-primary">Add Book Title</a>
+<a href="{% url 'ae-page' %}" class="btn btn-outline-primary">Add Book Edition</a>
+<a href="{% url 'ai-page' %}" class="btn btn-outline-primary active">Add ISBN</a>
+
+{% if submitted %}
+<div class="alert alert-success" role="alert">
+    A <strong>Book's ISBN</strong> was added successfully.
+    <a href="{% url 'vi-page' %}" class=""> View all ISBNs </a>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+{% endif %}
+
+<div class="container jumbotron">
+    <form method="POST" action="" >
+        {% csrf_token %}
+        {{form.as_p}}
+        <input class="btn btn-dark" type="submit" value="Add ISBN">
+        <a href="{% url 'ai-page' %}" class="btn btn-outline-danger">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}

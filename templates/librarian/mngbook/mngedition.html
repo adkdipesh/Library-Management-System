@@ -1,0 +1,45 @@
+{% extends "librarian/mngbook/base_mngbook.html" %}
+
+
+{% block content %}
+<center>
+<a href="{% url 'vt-page' %}" class="btn btn-outline-primary">Manage Title</a>
+<a href="{% url 've-page' %}" class="btn btn-outline-primary active">Manage Edition</a>
+<a href="{% url 'vi-page' %}" class="btn btn-outline-primary">Manage ISBN</a>
+<a href="{% url 'va-page' %}" class="btn btn-outline-primary">Manage editions</a>
+<a href="{% url 'vp-page' %}" class="btn btn-outline-primary">Manage Publishers</a>
+</center>
+
+<center><h1 style="margin-top: 10px;">List of Edition of Books</h1></center>
+
+<table class="table" id="example">
+  <thead class="thead-dark">
+            <tr>
+                <th>Sr.No</th>
+                <th>Title</th>
+                <th>Edition No.</th>
+                <th>Published By</th>
+                <th>Price</th>
+                <th> Actions</th>
+            </tr>
+        </thead>
+  <tbody>
+    {% for edition in editions %}
+    <tr>
+        <td>{{forloop.counter}}.</td>
+        <td>{{edition.title.name}}</td>
+        <td>{{edition.which_edition}}</td>
+        <td>{{edition.title.publisher.name}}</td>
+        <td><i class="fa-solid fa-indian-rupee-sign"> </i>{{edition.price_in_Rs}}</td>
+        <td>
+            <a href="/edit_edition/{{edition.id }}"><span class="btn btn-primary" >Edit </span></a>
+            <a href="/delete_edition/{{edition.id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this edition?')"> Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<center><a class="btn btn-primary" href="{% url 'ae-page' %}" role="button"><i class="fa-solid fa-plus"></i> Add Book Edition</a></center> 
+
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "librarian/mngstudent/base_mngstudent.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container jumbotron">
+    <center><h2>Edit a Student's Information</h2></center>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input class="btn btn-dark" type="submit" value="Update">
+        <a href="{% url 'vs-page' %}" class="btn btn-outline-primary">Back</a>
+    </form>
+</div>
+
+{% endblock %}

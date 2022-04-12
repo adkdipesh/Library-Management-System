@@ -1,0 +1,66 @@
+{% extends "librarian/mngstudent/base_mngstudent.html" %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center"><u>All Students List</u></h1>
+    <table class="table table-hover" id="example" >
+        <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    <th>Name</th>
+                    <th>Roll No.</th>
+                    <th>Email address</th>
+                    <th>Issued Count</th>
+                    <th>Fine Status</th>
+                    <th> Actions</th>
+                </tr>
+            </thead>
+      <tbody>
+        {% for student in students %}
+        <tr>
+            <td>{{forloop.counter}}.</td>
+            <td>{{student.name}}</td>
+            <td>SEC{{student.year_joined}}{{student.branch}}{{student.roll_no}}</td>
+            <td>{{student.email}}</td>
+            <td>{{student.issued_count}}</td>
+            <td>{{student.fine_status}}</td>
+            <td>
+                <a href="/edit_student/{{student.id}}"><span class="btn btn-primary" >Edit </span></a>
+                <a href="/delete_student/{{student.id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this student?')"> Delete</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+    <center><a class="btn btn-primary" href="{% url 'as-page' %}" role="button"><i class="fa-solid fa-user-plus"></i> Add New Student</a></center> 
+
+{% endblock %}
+
+
+
+{% block extrascripts %} 
+# For Excel
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>                               # For Excel file download
+# For Search Query
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+# For Excel and pdf
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+# For Pdf
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>      # For PDF download
+#For All
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+      $('#example').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+          'excelHtml5',
+          'pdfHtml5'
+        ]
+      });
+    });
+  </script>
+{% endblock %}

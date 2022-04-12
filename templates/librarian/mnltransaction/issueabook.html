@@ -1,0 +1,79 @@
+{% extends "librarian/base.html" %}
+
+{% block title %} Issue Book {% endblock %}
+
+{% block stylesheets %}
+
+
+{% endblock %}
+
+{% block navactive %}
+<li><a href="{% url 'home-page' %}" ><i class="fa-solid fa-house"></i> Home</a></li>
+<li><a href="{% url 'at-page' %}"><i class="fa-solid fa-book"></i> Add Book</a></li>
+<li><a href="{% url 'as-page' %}"><i class="fa-solid fa-user-plus"></i> Add Student</a></li>
+<li><a href="{% url 'vt-page' %}"><i class="fa-solid fa-bars-progress"></i> Manage Book</a></li>
+<li><a href="{% url 'vs-page' %}"><i class="fa-solid fa-user-pen"></i> Manage Student</a></li>
+<li class="active"><a href="{% url 'vib-page' %}"><i class="fa-solid fa-arrow-right-arrow-left"></i> Manual Transaction</a></li>
+<li><a href="{% url 'fs-page' %}"><i class="fa-solid fa-indian-rupee-sign"></i> Fine Section</a></li>
+{% endblock %}
+
+
+{% block content %}
+<a href="{% url 'vib-page' %}" class="btn btn-outline-primary mt-4">View Issued Books</a>
+<a href="{% url 'iab-page' %}" class="btn btn-outline-primary mt-4 active">Issue Book</a>
+
+<!-- Breadcrumbs-->
+<ol class="breadcrumb ">
+    <li class="breadcrumb-item"><a href="{% url 'vib-page' %}">Transactions</a></li>
+    <li class="breadcrumb-item active">Issue a Book</li>
+</ol>
+
+
+
+<h2>ISSUE BOOK TO STUDENT</h2>
+<br/>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+<div class="signup-form">
+    <form  method="post"  onkeyup="myFunction()" class="form-horizontal">
+    {% csrf_token %}   
+    {% for field in form %}
+        <label class="control-label col-xs-4">{{ field.label_tag }}</label>
+        {{ field }}
+    {% endfor %}
+    <button type="submit" class="btn btn-success" style="border-radius: 0%;">ISSUE</button>
+    </form>
+    <div>View Issued Books to Students.  <a href="{% url 'vib-page' %}">Click here</a></div>
+</div>
+{% endblock %}
+
+{% block extrascripts %}
+<script>
+    function myFunction() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+    </script>
+    <script>
+    let input = document.getElementById("id_studentf");
+
+    console.log(input)
+    </script>
+{% endblock %}
