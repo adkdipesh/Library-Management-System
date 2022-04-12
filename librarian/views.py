@@ -285,8 +285,8 @@ def deletestudent(request, student_id):
 @login_required
 def issueabook(request):
     form = IssueBookForm()
-    if request.method == 'POST':
-        #now this form have data from html
+    if request.method == 'POST': 
+        #now this form have data from htmlasasdasd
         form = IssueBookForm(request.POST)
         if form.is_valid():
             obj = Transaction()
