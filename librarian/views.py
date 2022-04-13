@@ -9,6 +9,7 @@ from .models import Author, Publisher, Title, Edition, ISBN, Student, Transactio
 from .forms import AuthorForm, PublisherForm, TitleForm, EditionForm, ISBNForm, StudentForm, IssueBookForm
 from django.http import HttpResponseRedirect
 from django.utils import timezone
+import datetime
 from datetime import date
 # from django.contrib import messages
 from django.core.mail import send_mail
@@ -292,18 +293,25 @@ def issueabook(request):
             obj = Transaction()
             obj.student = form.cleaned_data['studentf']
             obj.isbn = form.cleaned_data['isbnf']
+            
+            sts = Transaction.objects.filter(isbn = obj.isbn, returned_status = False).count()
+            print(sts)
+            
             count1 = obj.student.issued_count
             fine = obj.student.fine_status
-            if count1<=2 and fine == False:
+            
+            print(count1, fine)
+            
+            if count1<2 and fine == False and sts == 0:
                 obj.student.issued_count += 1
-                print(obj.student.issued_count)           
+                obj.student.save()          
                 obj.save()
                 # from gtts import gTTS
                 # sound=gTTS('book issued')S
                 # sound.save('book.mp3')
                 return redirect('vib-page')
             else:
-                messages.info(request, "Unable to issue a book. Either this student have already meet max borrowed limit or yet to clear fine.")
+                messages.info(request, "Unable to issue a book. Either book is unavailable in stock or this student have already meet max borrowed limit or yet to clear fine.")
     return render(request,'librarian/mnltransaction/issueabook.html',{'form':form})
 
 #           obj2 = Student.objects.filter(id=student_id)
@@ -326,33 +334,39 @@ def viewissuedbooks(request):
             fine=day*10
             isb.fine = fine
             isb.student.fine_status = True
+            isb.student.save()
         isb.save()       
     return render(request,'librarian\mnltransaction\issuedbooks.html', {'issuedbooks':issuedbooks})
     
     
 @login_required
 def returnabook(request, transaction_id):
-    obj = Transaction()
     obj = Transaction.objects.get(id= transaction_id)
-    obj.student.issued_count -= 1               
-    if obj.fine != 0:
-        obj.returned_status = True
-        obj.returned_date = date.today
-    else:
+    #print(obj.student.issued_count)
+    obj.student.issued_count -= 1
+    obj.student.save()
+    print(obj.student.issued_count)
+    obj.student.save()             
+    if obj.fine == 0:
         obj.delete()
+    else:
+        obj.returned_status = True
+        obj.returned_date = datetime.today()
+        obj.save()
     return redirect('vib-page')
 
 
 @login_required
 def finerecord(request):
-    objs = Transaction.objects.filter(~Q(fine=None))
+    objs = Transaction.objects.filter(~Q(fine=0))
     return render(request, 'librarian/finerecord.html', {'objs':objs})
 
 
 @login_required
 def clearfine(request, transaction_id):
-    obj = Transaction.objects.filter(id= transaction_id)
-    #obj.student.fine_status = False
+    obj = Transaction.objects.get(id= transaction_id)
+    obj.student.fine_status = False
+    obj.student.save()
     obj.delete()
     return redirect('fs-page')
 

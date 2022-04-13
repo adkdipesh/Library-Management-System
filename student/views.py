@@ -46,7 +46,7 @@ def decode_base64(data, altchars=b'+/'):
 def recognize():
     cam=cv2.VideoCapture(0)
     recognizer = cv2.face.LBPHFaceRecognizer_create()
-    recognizer.read('trainer.yml')
+    recognizer.read('trainer1.yml')
     cascadePath = "haarcascade_frontalface_default.xml"
     faceCascade = cv2.CascadeClassifier(cascadePath)
     
@@ -60,17 +60,16 @@ def recognize():
             cv2.rectangle(im, (x, y), (x+w, y+h), (225, 0, 0), 2)
             Id, conf = recognizer.predict(gray[y:y+h, x:x+w])
             print(conf)
-            if(conf < 45):
-                if(Id == 1):
+            if(conf < 45): 
+                print(Id)
+                if(Id == 2):
                     id = 15
                     print(Id)
                     cam.release()
                     cv2.destroyAllWindows()
                     return id
-            else:
-            #      Id = "Unknown" 
-                print(Id)
-     
+                else:
+                    return 0
 
 def slogin(request):
     if request.method == "POST":
@@ -85,6 +84,8 @@ def slogin(request):
             transactions = Transaction.objects.filter(student = obj)
             # return redirect(home, xyz={'student':obj})
             return render(request, 'studenttemplate/index.html', {'student':obj,'transactions':transactions})
+        else:
+            return render(request, 'studenttemplate/slogin.html', {'msg':'Unauthenticate Person detected.'})
     return render(request, 'studenttemplate/slogin.html', {})
 
 
@@ -150,6 +151,7 @@ def qrscan():
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
             vs.stop()
             cv2.destroyAllWindows()
+            print(text)
             return text
             # if the barcode text is currently not in our CSV file, write
             # the timestamp + barcode to disk and update the set
@@ -181,6 +183,7 @@ def borrowbook(request):
         obj.student = Student.objects.get(id = 15)
         if obj.student.issued_count <= 2:
             obj.student.issued_count += 1
+            obj.student.save()
             obj.save()
             sound("book issued successfully")
             return render(request, 'studenttemplate/borrowbook.html',{'obj':obj})
@@ -197,6 +200,7 @@ def returnbook(request):
         obj = Transaction.objects.get(isbn = isbnflt, student=student)
         if obj != NULL :
             obj.student.issued_count -= 1
+            obj.student.save()
             obj.delete()
             sound("book returned successfully")
             return render(request, 'studenttemplate/returnbook.html',{'barcode':barcode, 'msg':' is returned successfully.'})

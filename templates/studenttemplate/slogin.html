@@ -87,6 +87,7 @@
         <form method="POST" action={% url  "slogin-page" %}>
             {% csrf_token %}
             <input type="text" name="uname" id="dataurl" placeholder="Imgstr">
+            <h3>{{msg}}</h3>
             <button  type="submit" class="btn btn-info">Log in</button>
         </form>
     </div>

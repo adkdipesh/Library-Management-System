@@ -66,7 +66,7 @@ class Student(models.Model):
     phone = models.CharField(max_length=15, unique=True)
     email = models.EmailField(max_length=75, unique=True)
     address = models.CharField(max_length=1024)
-    issued_count = models.IntegerField(default='0')
+    issued_count = models.IntegerField(default=0)
     fine_status = models.BooleanField(default=False)
     def __str__(self):
         return 'SEC' + self.year_joined + '' + self.branch + '' + self.roll_no + ' - ' + self.name
@@ -82,8 +82,9 @@ class Transaction(models.Model):
      issued_date = models.DateField(auto_now=True)
      due_date = models.DateField(default=get_expiry)
      returned_status = models.BooleanField(default=False)
-     returned_date = models.DateTimeField(null=True, blank=True)
-     fine = models.IntegerField(null=True, blank=True)
+     returned_date = models.DateTimeField(auto_now_add=False, auto_now=False, null=True)
+     
+     fine = models.IntegerField(null=True, default=0)
 
      def __str__(self):
         return str(self.student)
