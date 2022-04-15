@@ -46,7 +46,7 @@ def decode_base64(data, altchars=b'+/'):
 def recognize():
     cam=cv2.VideoCapture(0)
     recognizer = cv2.face.LBPHFaceRecognizer_create()
-    recognizer.read('trainer1.yml')
+    recognizer.read('trainer.yml')
     cascadePath = "haarcascade_frontalface_default.xml"
     faceCascade = cv2.CascadeClassifier(cascadePath)
     
@@ -60,9 +60,9 @@ def recognize():
             cv2.rectangle(im, (x, y), (x+w, y+h), (225, 0, 0), 2)
             Id, conf = recognizer.predict(gray[y:y+h, x:x+w])
             print(conf)
-            if(conf < 45): 
+            if(conf < 40): 
                 print(Id)
-                if(Id == 2):
+                if(Id == 1):
                     id = 15
                     print(Id)
                     cam.release()
@@ -181,7 +181,13 @@ def borrowbook(request):
         obj = Transaction()
         obj.isbn = ISBN.objects.get(barcode = barcode)
         obj.student = Student.objects.get(id = 15)
-        if obj.student.issued_count <= 2:
+        sts = Transaction.objects.filter(isbn = obj.isbn, returned_status = False).count()
+        print(sts)       
+        count1 = obj.student.issued_count
+        fine = obj.student.fine_status      
+        print(count1, fine)       
+        if count1<2 and fine == False and sts == 0:
+        #if obj.student.issued_count <= 2:
             obj.student.issued_count += 1
             obj.student.save()
             obj.save()
